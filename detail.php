@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html class="supports-animation supports-columns svg no-touch no-ie no-oldie no-ios supports-backdrop-filter as-mouseuser" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+
     <meta name="viewport" content="width=1024">
     <title>Tienda e-commerce</title>
 
@@ -44,7 +44,7 @@
 <body class="as-theme-light-heroimage">
 
     <div class="stack">
-        
+
         <div class="as-search-wrapper" role="main">
             <div class="as-navtuck-wrapper">
                 <div class="as-l-fullwidth  as-navtuck" data-events="event52">
@@ -94,7 +94,7 @@
                                         <img src="./assets/wireless-headphones" class="ir ir item-image as-producttile-image  " style="max-width: 70%;max-height: 70%;"alt="" width="445" height="445">
                                     </div>
                                     <div class="images mini-gallery gal5 ">
-                                    
+
 
                                         <div class="as-isdesktop with-paddlenav with-paddlenav-onhover">
                                             <div class="clearfix image-list xs-no-js as-util-relatedlink relatedlink" data-relatedlink="6|Powerbeats3 Wireless Earphones - Neighborhood Collection - Brick Red|MPXP2">
@@ -102,17 +102,18 @@
                                                     <div class=""></div>
                                                     <img src="./assets/003.jpg" class="ir ir item-image as-producttile-image" alt="" width="445" height="445" style="content:-webkit-image-set(url(<?php echo $_POST['img'] ?>) 2x);">
                                                 </div>
-                                                
+
                                             </div>
 
-                                            
+
                                         </div>
 
-                                        
+
 
                                     </div>
 
                                 </div>
+
                                 <div class="as-producttile-info" style="float:left;min-height: 168px;">
                                     <div class="as-producttile-titlepricewraper" style="min-height: 128px;">
                                         <div class="as-producttile-title">
@@ -130,7 +131,92 @@
                                             <?php echo "$" . $_POST['unit'] ?>
                                         </h3>
                                     </div>
-                                    <button type="submit" class="mercadopago-button" formmethod="post">Pagar</button>
+                                    <?php
+                                    // SDK de Mercado Pago
+                                    require _DIR_ .  '/vendor/autoload.php';
+
+                                    // Agrega credenciales
+                                    MercadoPago\SDK::setAccessToken('APP_USR-6317427424180639-042406-6aee9711d6bc4207c2dc79590031b6f0-469485398');
+
+                                   // Crea un objeto de preferencia
+                                    $preference = new MercadoPago\Preference();
+
+                                    $url_actual = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+                                    //echo $url_actual;
+
+                                    //Restricciones de tarjeta
+                                    $preference->payment_methods = array(
+                                        "excluded_payment_methods" => array(
+                                          array("id" => "amex")
+                                        ),
+                                        "excluded_payment_types" => array(
+                                          array("id" => "atm")
+                                        ),
+                                        "installments" => 6
+                                    );
+
+
+                                    // Pagador
+                                    $payer = new MercadoPago\Payer();
+                                    $payer->name = "Lalo";
+                                    $payer->surname = "Landa";
+                                    $payer->identification = array(
+                                        "type" => "DNI",
+                                        "number" => "22.333.444"
+                                    );
+                                    $payer->email = "test_user_63274575@testuser.com";
+                                    $payer->phone = array(
+                                        "area_code" => "011",
+                                        "number" => "2222-3333"
+                                    );
+                                    $payer->address = array(
+                                        "street_name" => "Falsa",
+                                        "street_number" => 123,
+                                        "zip_code" => "1111"
+                                    );
+
+
+                                    // Item
+                                    $item = new MercadoPago\Item();
+                                    $item->id = '1234';
+                                    $item->title = $_POST['title'];
+                                    $item->description = 'Dispositivo móvil de Tienda e-commerce';
+                                    $item->picture_url = $url_actual.substr($_POST['img'], 1, strlen($_POST['img']));;
+                                    $item->quantity = 1;
+                                    $item->unit_price = $_POST['price'];
+
+
+                                    $preference->items = array($item);
+                                    $preference->external_reference = 'ABCD1234';
+                                    $preference->payer = $payer;
+
+
+                                    $preference->back_urls = array(
+                                        "success" => $url_actual."/resp.php",
+                                        "failure" => $url_actual."/resp.php",
+                                        "pending" => $url_actual."/resp.php"
+                                    );
+
+
+                                    $preference->auto_return = "approved";
+
+                                    $preference->notification_url = $url_actual."/ipn.php";
+
+                                    $preference->save();
+
+                                    ?>
+
+                                    <!--form action="/procesar-pago" method="POST"-->
+                                    <form action="/respuesta.php" method="POST">
+                                        <script
+                                        src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
+                                        data-preference-id="<?php echo $preference->id; ?>"
+                                        data-header-color="#2D3277"
+                                        data-elements-color="#2D3277"
+                                        data-button-label="Pagar la compra">
+                                        </script>
+
+                                    </form>
                                 </div>
                             </div>
                         </div>
