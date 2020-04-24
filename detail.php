@@ -208,8 +208,8 @@ ffff
                                    
                                     ?>
 
-                                    <!--form action="/procesar-pago" method="POST"-->
-                                    <form action="/respuesta.php" method="POST">
+                                    
+                                    <form action="/resp.php" method="POST">
                                         <script
                                         src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
                                         data-preference-id="<?php echo $preference->id; ?>"
@@ -218,8 +218,7 @@ ffff
                                         data-button-label="Pagar la compra">
                                         </script>
                                     </form>
-                                    <!--button type="submit" class="mercadopago-button" formmethod="post">Pagar</button-->
-
+                                    
                                    
                                 </div>
                             </div>
