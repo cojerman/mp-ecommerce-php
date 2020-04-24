@@ -142,9 +142,9 @@ ffff
                                     
                                    // Crea un objeto de preferencia
                                     $preference = new MercadoPago\Preference();
-                                    //$preference->additional_info = "Cris";
+                                   
                                     $url_actual = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-                                    //echo $url_actual;
+                                  
 
                                     //Restricciones de tarjeta
                                     $preference->payment_methods = array(
@@ -194,15 +194,15 @@ ffff
 
                                     
                                     $preference->back_urls = array(
-                                        "success" => $url_actual."/respuesta.php",
-                                        "failure" => $url_actual."/respuesta.php",
-                                        "pending" => $url_actual."/respuesta.php"
+                                        "success" => $url_actual."/resp.php",
+                                        "failure" => $url_actual."/resp.php",
+                                        "pending" => $url_actual."/resp.php"
                                     );
 
                                     
                                     $preference->auto_return = "approved";
 
-                                    $preference->notification_url = $url_actual."/retorno.php";
+                                    $preference->notification_url = $url_actual."/ipn.php";
 
                                     $preference->save();
                                    
