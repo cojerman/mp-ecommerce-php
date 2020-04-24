@@ -34,10 +34,10 @@
                 print_r("Totally paid. Print the label and release your item.");
             }
         } else { // The merchant_order don't has any shipments
-            print_r("Totally paid. Release your item.");
+            print_r("Totally paid. Release your item");
         }
     } else {
-        print_r("Not paid yet. Do not release your item.");
+        print_r("Not paid yet. Do not release your item");
     }
 
 

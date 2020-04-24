@@ -253,21 +253,25 @@
 
                                      <?php
                                         break;
+                                        
                                     case "pending":
                                         ?>
                                          <div style="text-align: center;padding-top: 5%;"><p><b>PAGO PENDIENTE</b></p> </div>
                                         <?php
                                         break;
+
                                     case "in_process":
                                         ?>
                                         <div style="text-align: center;padding-top: 5%;"><p><b>PAGO EN PROCESO</b></p> </div>
                                        <?php
                                         break;
+
                                     case "rejected":
                                         ?>
                                         <div style="text-align: center;padding-top: 5%;"><p><b>PAGO RECHAZADO</b></p> </div>
                                        <?php
                                         break;
+
                                     case "cancelled":
                                         ?>
                                         <div style="text-align: center;padding-top: 5%;"><p><b>PAGO CANCELADO</b></p> </div>
