@@ -1,5 +1,5 @@
 <?php
-    require _DIR_ .  '/vendor/autoload.php';
+    require __DIR__ .  '/vendor/autoload.php';
     MercadoPago\SDK::setAccessToken("APP_USR-6317427424180639-042406-6aee9711d6bc4207c2dc79590031b6f0-469485398");
 
 
